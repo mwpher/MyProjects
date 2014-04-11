@@ -3,13 +3,18 @@
 /* The generated code is subject to the original license. */
 /* Compiled for: FreeBSD, i386, clang */
 /* Command for C compiler:
-   clang -c  -w  -I/usr/local/lib/nimrod -o usr/home/matt/MyProjects/Challenges-Nimrod/Mine/nimcache/hello2.o usr/home/matt/MyProjects/Challenges-Nimrod/Mine/nimcache/hello2.c */
+   clang -c  -w  -I/usr/local/lib/nimrod -o /usr/home/matt/MyProjects/Challenges-Nimrod/Numbers/calc/nimcache/strutils.o /usr/home/matt/MyProjects/Challenges-Nimrod/Numbers/calc/nimcache/strutils.c */
 #define NIM_INTBITS 32
 #include "nimbase.h"
-typedef struct TGenericSeq TGenericSeq;
 typedef struct NimStringDesc NimStringDesc;
-typedef struct tcell34049 tcell34049;
+typedef struct TGenericSeq TGenericSeq;
+typedef struct einvalidvalue1053 einvalidvalue1053;
+typedef struct esynch1029 esynch1029;
+typedef struct E_Base E_Base;
+typedef struct TNimObject TNimObject;
 typedef struct TNimType TNimType;
+typedef struct TNimNode TNimNode;
+typedef struct tcell34049 tcell34049;
 typedef struct tcellseq34065 tcellseq34065;
 typedef struct tgcheap36016 tgcheap36016;
 typedef struct tcellset34061 tcellset34061;
@@ -22,7 +27,6 @@ typedef struct tintset16818 tintset16818;
 typedef struct ttrunk16814 ttrunk16814;
 typedef struct tavlnode17608 tavlnode17608;
 typedef struct tgcstat36014 tgcstat36014;
-typedef struct TNimNode TNimNode;
 typedef struct tbasechunk16841 tbasechunk16841;
 typedef struct tfreecell16833 tfreecell16833;
 struct TGenericSeq {
@@ -33,6 +37,40 @@ typedef NIM_CHAR TY611[100000001];
 struct NimStringDesc {
   TGenericSeq Sup;
 TY611 data;
+};
+typedef N_NIMCALL_PTR(void, TY891) (void* p, NI op);
+struct TNimType {
+NI size;
+NU8 kind;
+NU8 flags;
+TNimType* base;
+TNimNode* node;
+void* finalizer;
+TY891 marker;
+};
+struct TNimObject {
+TNimType* m_type;
+};
+struct E_Base {
+  TNimObject Sup;
+E_Base* parent;
+NCSTRING name;
+NimStringDesc* message;
+NimStringDesc* trace;
+};
+struct esynch1029 {
+  E_Base Sup;
+};
+struct einvalidvalue1053 {
+  esynch1029 Sup;
+};
+struct TNimNode {
+NU8 kind;
+NI offset;
+TNimType* typ;
+NCSTRING name;
+NI len;
+TNimNode** sons;
 };
 struct tcell34049 {
 NI Refcount;
@@ -90,16 +128,6 @@ NI Recgclock;
 tmemregion17610 Region;
 tgcstat36014 Stat;
 };
-typedef N_NIMCALL_PTR(void, TY891) (void* p, NI op);
-struct TNimType {
-NI size;
-NU8 kind;
-NU8 flags;
-TNimType* base;
-TNimNode* node;
-void* finalizer;
-TY891 marker;
-};
 typedef NI TY16821[16];
 struct tpagedesc34057 {
 tpagedesc34057* Next;
@@ -144,37 +172,31 @@ NI Key;
 NI Upperbound;
 NI Level;
 };
-struct TNimNode {
-NU8 kind;
-NI offset;
-TNimType* typ;
-NCSTRING name;
-NI len;
-TNimNode** sons;
-};
 struct tfreecell16833 {
 tfreecell16833* Next;
 NI Zerofield;
 };
-N_NIMCALL(NimStringDesc*, readline_7724)(FILE* f);
+N_NIMCALL(NI, npuParseFloat)(NimStringDesc* s, NF* number, NI start);
+N_NIMCALL(void*, newObj)(TNimType* typ, NI size);
+static N_INLINE(void, appendString)(NimStringDesc* dest, NimStringDesc* src);
+N_NIMCALL(NimStringDesc*, rawNewString)(NI space);
 static N_INLINE(void, asgnRefNoCycle)(void** dest, void* src);
 static N_INLINE(tcell34049*, usrtocell_37443)(void* usr);
 static N_INLINE(void, nimFrame)(TFrame* s);
 static N_INLINE(void, popFrame)(void);
 static N_INLINE(void, rtladdzct_38602)(tcell34049* c);
 N_NOINLINE(void, addzct_37415)(tcellseq34065* s, tcell34049* c);
-static N_INLINE(void, initStackBottom)(void);
-N_NOINLINE(void, setStackBottom)(void* thestackbottom);
-N_NOINLINE(void, systemInit)(void);
-N_NOINLINE(void, systemDatInit)(void);
-N_NOINLINE(void, hello2Init)(void);
-N_NOINLINE(void, hello2DatInit)(void);
-STRING_LITERAL(TMP120, "What\'s your name? ", 18);
-STRING_LITERAL(TMP121, "Hi, ", 4);
-STRING_LITERAL(TMP122, "!", 1);
-NimStringDesc* name_67003;
+N_NIMCALL(void, raiseException)(E_Base* e, NCSTRING ename);
+STRING_LITERAL(TMP146, "invalid float: ", 15);
+extern TNimType NTI70625; /* ref EInvalidValue */
+extern TNimType NTI1053; /* EInvalidValue */
 extern TFrame* frameptr_10225;
 extern tgcheap36016 gch_36042;
+
+static N_INLINE(void, appendString)(NimStringDesc* dest, NimStringDesc* src) {
+	memcpy(((NCSTRING) (&(*dest).data[((*dest).Sup.len)- 0])), ((NCSTRING) ((*src).data)), (NI32)((*src).Sup.len + 1));
+	(*dest).Sup.len += (*src).Sup.len;
+}
 
 static N_INLINE(void, nimFrame)(TFrame* s) {
 	(*s).prev = frameptr_10225;
@@ -243,40 +265,51 @@ static N_INLINE(void, asgnRefNoCycle)(void** dest, void* src) {
 	popFrame();
 }
 
-static N_INLINE(void, initStackBottom)(void) {
-	void* volatile locals;
-	locals = 0;
-	locals = ((void*) (&locals));
-	setStackBottom(locals);
+N_NIMCALL(NF, nsuParseFloat)(NimStringDesc* s) {
+	NF result;
+	NI l;
+	NIM_BOOL LOC2;
+	nimfr("ParseFloat", "strutils.nim")
+	result = 0;
+	nimln(368, "strutils.nim");
+	l = npuParseFloat(s, &result, 0);
+	nimln(369, "strutils.nim");
+	nimln(369, "strutils.nim");
+	nimln(696, "system.nim");
+	nimln(696, "system.nim");
+	nimln(369, "strutils.nim");
+	LOC2 = !((l == s->Sup.len));
+	if (LOC2) goto LA3;
+	nimln(369, "strutils.nim");
+	LOC2 = (l == 0);
+	LA3: ;
+	if (!LOC2) goto LA4;
+	{
+		einvalidvalue1053* e_70624;
+		NimStringDesc* LOC7;
+		e_70624 = 0;
+		nimln(1785, "system.nim");
+		e_70624 = (einvalidvalue1053*) newObj((&NTI70625), sizeof(einvalidvalue1053));
+		(*e_70624).Sup.Sup.Sup.m_type = (&NTI1053);
+		nimln(1786, "system.nim");
+		nimln(370, "strutils.nim");
+		LOC7 = 0;
+		LOC7 = rawNewString(s->Sup.len + 15);
+appendString(LOC7, ((NimStringDesc*) &TMP146));
+appendString(LOC7, s);
+		asgnRefNoCycle((void**) &(*e_70624).Sup.Sup.message, LOC7);
+		nimln(370, "strutils.nim");
+		raiseException((E_Base*)e_70624, "EInvalidValue");
+	}
+	LA4: ;
+	popFrame();
+	return result;
 }
-int cmdCount;
-char** cmdLine;
-char** gEnv;
-N_CDECL(void, NimMain)(void) {
-	systemDatInit();
-	hello2DatInit();
-	initStackBottom();
-	systemInit();
-	hello2Init();
-}
-int main(int argc, char** args, char** env) {
-	cmdLine = args;
-	cmdCount = argc;
-	gEnv = env;
-	NimMain();
-	return nim_program_result;
-}
-N_NOINLINE(void, hello2Init)(void) {
-	nimfr("hello2", "hello2.nim")
-	nimln(1, "hello2.nim");
-	printf("%s\012", (((NimStringDesc*) &TMP120))->data);
-	nimln(2, "hello2.nim");
-	asgnRefNoCycle((void**) &name_67003, readline_7724(stdin));
-	nimln(3, "hello2.nim");
-	printf("%s%s%s\012", (((NimStringDesc*) &TMP121))->data, (name_67003)->data, (((NimStringDesc*) &TMP122))->data);
+N_NOINLINE(void, strutilsInit)(void) {
+	nimfr("strutils", "strutils.nim")
 	popFrame();
 }
 
-N_NOINLINE(void, hello2DatInit)(void) {
+N_NOINLINE(void, strutilsDatInit)(void) {
 }
 

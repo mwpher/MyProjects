@@ -1,3 +1,3 @@
-echo("What's your name? ")
+stdout.write("What's your name? ")
 var name: string = readLine(stdin)
-echo("Hi, ", name, "!")
+stdout.write("Hi, ", name, "!\n")

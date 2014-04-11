@@ -3,7 +3,7 @@
 /* The generated code is subject to the original license. */
 /* Compiled for: FreeBSD, i386, clang */
 /* Command for C compiler:
-   clang -c  -w  -I/usr/local/lib/nimrod -o usr/home/matt/MyProjects/Challenges-Nimrod/Mine/nimcache/system.o usr/home/matt/MyProjects/Challenges-Nimrod/Mine/nimcache/system.c */
+   clang -c  -w  -I/usr/local/lib/nimrod -o usr/home/matt/MyProjects/Challenges-Nimrod/Numbers/calc/nimcache/system.o usr/home/matt/MyProjects/Challenges-Nimrod/Numbers/calc/nimcache/system.c */
 #define NIM_INTBITS 32
 #include "nimbase.h"
 
@@ -59,6 +59,7 @@ typedef struct EFloatUnderflow EFloatUnderflow;
 typedef struct treprclosure63215 treprclosure63215;
 typedef struct tslice65456 tslice65456;
 typedef struct EAssertionFailed EAssertionFailed;
+typedef struct einvalidvalue1053 einvalidvalue1053;
 typedef N_NIMCALL_PTR(NIM_BOOL, TY5649) (E_Base* e);
 typedef N_NIMCALL_PTR(NIM_BOOL, TY5654) (E_Base* e);
 typedef N_NIMCALL_PTR(void, TY5659) (void);
@@ -283,6 +284,9 @@ NI A;
 NI B;
 };
 struct EAssertionFailed {
+  esynch1029 Sup;
+};
+struct einvalidvalue1053 {
   esynch1029 Sup;
 };
 struct TY7796 {
@@ -631,6 +635,7 @@ N_NIMCALL(void, insert_66415)(NimStringDesc** x, NimStringDesc* item, NI i);
 N_NIMCALL(void, safeadd_66613)(NimStringDesc** x, NIM_CHAR y);
 N_NIMCALL(void, safeadd_66620)(NimStringDesc** x, NimStringDesc* y);
 N_NIMCALL(TNimObject, locals_66627)(void);
+N_NIMCALL(void, TMP145)(void* p, NI op);
 static N_INLINE(void, listremove_21004)(tbigchunk16845** head, tbigchunk16845* c);
 N_NIMCALL(NIM_BOOL, contains_21011)(tbigchunk16845* list, tbigchunk16845* x);
 static N_INLINE(void, listadd_22230)(tbigchunk16845** head, tbigchunk16845* c);
@@ -768,6 +773,8 @@ tavlnode17608* bottom_17641;
 tgcheap36016 gch_36042;
 TNimType NTI1049; /* EAssertionFailed */
 TNimType NTI65857; /* ref EAssertionFailed */
+TNimType NTI1053; /* EInvalidValue */
+TNimType NTI70625; /* ref EInvalidValue */
 
 N_NIMCALL(void, add_5677)(NimStringDesc** x, NCSTRING y) {
 	NI i;
@@ -10263,6 +10270,13 @@ N_NIMCALL(TNimObject, locals_66627)(void) {
 	popFrame();
 	return result;
 }
+N_NIMCALL(void, TMP145)(void* p, NI op) {
+	einvalidvalue1053* a;
+	a = (einvalidvalue1053*)p;
+	nimGCvisit((void*)(*a).Sup.Sup.parent, op);
+	nimGCvisit((void*)(*a).Sup.Sup.message, op);
+	nimGCvisit((void*)(*a).Sup.Sup.trace, op);
+}
 
 static N_INLINE(void, listremove_21004)(tbigchunk16845** head, tbigchunk16845* c) {
 	nimfr("ListRemove", "alloc.nim")
@@ -10461,7 +10475,7 @@ N_NOINLINE(void, systemInit)(void) {
 
 N_NOINLINE(void, systemDatInit)(void) {
 static TNimNode* TMP8[4];
-static TNimNode TMP0[24];
+static TNimNode TMP0[25];
 NTI1009.size = sizeof(TNimObject);
 NTI1009.kind = 17;
 NTI1009.base = 0;
@@ -10689,5 +10703,16 @@ NTI65857.kind = 22;
 NTI65857.base = (&NTI1049);
 NTI65857.flags = 2;
 NTI65857.marker = TMP113;
+NTI1053.size = sizeof(einvalidvalue1053);
+NTI1053.kind = 17;
+NTI1053.base = (&NTI1029);
+NTI1053.flags = 2;
+TMP0[24].len = 0; TMP0[24].kind = 2;
+NTI1053.node = &TMP0[24];
+NTI70625.size = sizeof(einvalidvalue1053*);
+NTI70625.kind = 22;
+NTI70625.base = (&NTI1053);
+NTI70625.flags = 2;
+NTI70625.marker = TMP145;
 }
 
