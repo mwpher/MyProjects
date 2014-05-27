@@ -1,0 +1,13 @@
+[submodule "Challenges-C"]
+	path = Challenges-C
+	url = https://github.com/mwpher/Projects.git
+	branch = C
+[submodule "Challenges-Py"]
+	path = Challenges-Py
+	url = https://github.com/mwpher/Projects.git
+	branch = Python
+[submodule "Challenges-Nimrod"]
+	path = Challenges-Nimrod
+	url = https://github.com/mwpher/Projects.git
+	branch = Nimrod
+
