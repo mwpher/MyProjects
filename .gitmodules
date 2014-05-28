@@ -16,3 +16,4 @@
 [submodule "MattLib"]
 	path = MattLib
 	url = https://github.com/mwpher/MattLib
+	branch = master
