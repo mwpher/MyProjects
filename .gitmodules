@@ -10,7 +10,7 @@
 
 [submodule "Challenges-Nimrod"]
 	path = Challenges-Nimrod
-	url = https://github.com/mwpher/Projects.git
+	url = https://github.com/mwpher/Projects
 	branch = Nimrod
 
 [submodule "MattLib"]
