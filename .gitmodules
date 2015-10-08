@@ -17,3 +17,6 @@
 	path = MattLib
 	url = https://github.com/mwpher/MattLib
 	branch = master
+[submodule "Inform"]
+	path = Inform
+	url = https://github.com/mwpher/inform-projects
